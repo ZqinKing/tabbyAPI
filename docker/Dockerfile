@@ -3,17 +3,24 @@ FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     git \
     ca-certificates \
     python3.12 \
-    python3-pip \
+    python3.12-dev \
     python3.12-venv \
+    python3.12-distutils \
     && rm -rf /var/lib/apt/lists/*
 
+# Install pip for Python 3.12
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
+
 # Create a virtual environment
-RUN python3 -m venv /opt/venv
+RUN python3.12 -m venv /opt/venv
 
 # Activate the venv and set the PATH
 ENV PATH="/opt/venv/bin:$PATH"
