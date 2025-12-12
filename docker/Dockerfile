@@ -1,10 +1,11 @@
-# Use an official CUDA runtime with Ubuntu as a parent image
-FROM nvidia/cuda:12.8.1-runtime-ubuntu24.04
+# Use an official CUDA devel image with Ubuntu as a parent image
+FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
+    git \
     ca-certificates \
     python3.12 \
     python3-pip \
